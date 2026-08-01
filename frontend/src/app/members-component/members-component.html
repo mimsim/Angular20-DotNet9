@@ -1,0 +1,11 @@
+<p>members-component works!</p>
+<p>{{ members().length }}</p>
+
+@for (member of members(); track member.id) {
+<div>
+  
+    <p>{{ member.email }}</p>
+</div>
+} @empty {
+<p>Няма намерени членове.</p>
+}

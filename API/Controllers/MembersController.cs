@@ -1,23 +1,23 @@
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class MembersController(AppDbContext context) : ControllerBase
+
+    public class MembersController(AppDbContext context) : BaseApiController
     {
         [HttpGet]
-        public ActionResult<List<AppUser>> GetMembers()
+        public async Task<ActionResult<List<AppUser>>> GetMembers()
         {
-            var members = context.Users.ToList();
+            var members = await context.Users.ToListAsync();
             return Ok(members);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AppUser> GetMember(string id)
+        public async Task<ActionResult<AppUser>> GetMember(string id)
         {
-            var member = context.Users.Find(id);
+            var member = await context.Users.FindAsync  (id);
             if (member == null)
             {
                 return NotFound();

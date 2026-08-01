@@ -1,0 +1,33 @@
+:root {
+  /* Палитра "Signal Ops" - тъмен графит с хладен теал оттенък (не чист черен),
+     три сигнални цвята с ясно значение, вместо един generic accent */
+  --color-bg: #0e1a1c;
+  --color-surface: #152528;
+  --color-surface-raised: #1c3236;
+  --color-border: #24393d;
+
+  --color-text: #e9f2f1;
+  --color-text-dim: #93a7a6;
+
+  --signal-amber: #ffb238; /* running / в процес */
+  --signal-teal: #3fd7c3; /* done / успех */
+  --signal-coral: #ff6b5e; /* failed / грешка */
+  --signal-idle: #3a4d51; /* pending */
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
