@@ -1,4 +1,5 @@
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,8 @@ namespace API.Controllers
 
     public class MembersController(AppDbContext context) : BaseApiController
     {
+        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<AppUser>>> GetMembers()
         {
