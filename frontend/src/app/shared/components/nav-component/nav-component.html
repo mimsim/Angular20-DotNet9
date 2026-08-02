@@ -1,0 +1,55 @@
+<mat-toolbar class="nav-toolbar">
+    <!-- Лого -->
+    <div class="nav-logo">
+        <mat-icon class="logo-icon">favorite</mat-icon>
+        <span class="logo-text">DATING APP</span>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <!-- Навигационни линкове -->
+    <nav class="nav-links">
+        @for (link of navLinks; track link.route) {
+        <a class="nav-link" [routerLink]="link.route" routerLinkActive="active">
+            {{ link.label }}
+        </a>
+        }
+    </nav>
+
+    <span class="nav-spacer"></span>
+
+    <!-- Login форма (reactive, свързана с AuthService) -->
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <mat-form-field appearance="fill" class="login-field">
+            <input matInput type="email" placeholder="Email" formControlName="email" />
+            @if (emailControl?.touched && emailControl?.hasError('required')) {
+            <mat-error>Email е задължителен</mat-error>
+            }
+            @if (emailControl?.touched && emailControl?.hasError('email')) {
+            <mat-error>Невалиден email</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="login-field">
+            <input matInput type="password" placeholder="Password" formControlName="password" />
+            @if (passwordControl?.touched && passwordControl?.hasError('required')) {
+            <mat-error>Паролата е задължителна</mat-error>
+            }
+            @if (passwordControl?.touched && passwordControl?.hasError('minlength')) {
+            <mat-error>Минимум 6 символа</mat-error>
+            }
+        </mat-form-field>
+
+        <button mat-flat-button type="submit" class="login-button" [disabled]="loginForm.invalid || isLoading()">
+            @if (isLoading()) {
+            <mat-spinner diameter="18" class="login-spinner"></mat-spinner>
+            } @else {
+            Login
+            }
+        </button>
+
+        @if (errorMessage()) {
+        <span class="login-error">{{ errorMessage() }}</span>
+        }
+    </form>
+</mat-toolbar>

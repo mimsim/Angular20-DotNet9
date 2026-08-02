@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { MembersService } from '../services/members-service';
-import { IMember } from '../interfaces/members.interfaces';
+import { MembersService } from '../shared/services/members-service';
+import { IMember } from '../shared/interfaces/members.interfaces';
 
 @Component({
   selector: 'app-members-component',
