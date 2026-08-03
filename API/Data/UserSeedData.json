@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "userId": "3f2c1a90-1b2c-4d3e-9f8a-1234567890ab",
+        "email": "elena.petrova@example.com",
+        "dateOfBirth": "1996-04-12",
+        "imageUrl": "https://example.com/images/elena.jpg",
+        "displayName": "Elena",
+        "created": "2026-01-15T09:30:00Z",
+        "lastActive": "2026-08-01T18:45:00Z",
+        "gender": "female",
+        "description": "Обичам пътувания и добро кафе.",
+        "city": "Пловдив",
+        "country": "България"
+    },
+    {
+        "id": 2,
+        "userId": "7d4e5f60-2c3d-4e5f-8a9b-234567890abc",
+        "email": "ivan.georgiev@example.com",
+        "dateOfBirth": "1993-09-25",
+        "imageUrl": null,
+        "displayName": "Ivan",
+        "created": "2026-02-03T14:10:00Z",
+        "lastActive": "2026-07-30T21:05:00Z",
+        "gender": "male",
+        "description": null,
+        "city": "София",
+        "country": "България"
+    },
+    {
+        "id": 3,
+        "userId": "9a8b7c60-3d4e-5f6a-9b0c-34567890abcd",
+        "email": "maria.dimitrova@example.com",
+        "dateOfBirth": "1999-12-02",
+        "imageUrl": "https://example.com/images/maria.jpg",
+        "displayName": "Maria",
+        "created": "2026-03-20T11:00:00Z",
+        "lastActive": "2026-08-02T08:15:00Z",
+        "gender": "female",
+        "description": "Търся сериозна връзка.",
+        "city": "Варна",
+        "country": "България"
+    }
+]

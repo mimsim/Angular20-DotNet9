@@ -1,0 +1,92 @@
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #5b2fd4 0%, #3a1a8c 45%, #14082e 100%);
+    padding: 24px;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    border-radius: 12px;
+}
+
+.register-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.register-header h1 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #14082e;
+}
+
+.register-header p {
+    margin: 0;
+    font-size: 13px;
+    color: #6b6b6b;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.register-button {
+    margin-top: 12px;
+    height: 44px;
+    border-radius: 8px;
+    background-color: #5b2fd4;
+    color: #fff;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-button:disabled {
+    opacity: 0.6;
+}
+
+.register-spinner ::ng-deep circle {
+    stroke: #fff;
+}
+
+.form-error {
+    color: #d32f2f;
+    font-size: 13px;
+    margin: 4px 0;
+}
+
+.form-success {
+    color: #2e7d32;
+    font-size: 13px;
+    margin: 4px 0;
+}
+
+.login-hint {
+    text-align: center;
+    font-size: 13px;
+    color: #6b6b6b;
+    margin-top: 16px;
+}
+
+.login-hint a {
+    color: #5b2fd4;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-hint a:hover {
+    text-decoration: underline;
+}

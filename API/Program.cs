@@ -1,3 +1,4 @@
+using API.Data;
 using API.Interfaces;
 using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -48,6 +49,32 @@ app.UseCors(options =>
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<AppDbContext>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedUsers(context);
+}
+catch (Exception ex)
+{
+    Console.WriteLine("SEED/MIGRATE ERROR: " + ex.ToString());
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred during migration or seeding.");
+}   
+app.MapPost("api/seed", async (AppDbContext context) =>
+{
+    try
+    {
+        await Seed.SeedUsers(context);
+        var count = await context.Users.CountAsync();
+        return Results.Ok($"Seed завърши. Users в базата: {count}");
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(ex.ToString());
+    }
+});
 app.Run();
  

@@ -24,9 +24,9 @@ export class NavComponent {
 
   // Навигационни линкове (лесно разширими)
   readonly navLinks = [
-    { label: 'Matches', route: '/matches' },
-    { label: 'Lists', route: '/lists' },
-    { label: 'Messages', route: '/messages' },
+    { label: 'Home', route: '/home' },
+    { label: 'members', route: '/members' },
+    // { label: 'Messages', route: '/messages' },
   ];
 
   // Реактивна login форма

@@ -1,0 +1,79 @@
+<div class="register-page">
+    <mat-card class="register-card">
+        <div class="register-header">
+            <h1>Създай профил</h1>
+            <p>Присъедини се и намери своя match</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="register-form">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Име</mat-label>
+                <input matInput formControlName="displayName" />
+                @if (displayNameControl?.touched && displayNameControl?.hasError('required')) {
+                <mat-error>Името е задължително</mat-error>
+                }
+                @if (displayNameControl?.touched && displayNameControl?.hasError('minlength')) {
+                <mat-error>Минимум 2 символа</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" />
+                @if (emailControl?.touched && emailControl?.hasError('required')) {
+                <mat-error>Email е задължителен</mat-error>
+                }
+                @if (emailControl?.touched && emailControl?.hasError('email')) {
+                <mat-error>Невалиден email</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Парола</mat-label>
+                <input matInput type="password" formControlName="password" />
+                @if (passwordControl?.touched && passwordControl?.hasError('required')) {
+                <mat-error>Паролата е задължителна</mat-error>
+                }
+                @if (passwordControl?.touched && passwordControl?.hasError('minlength')) {
+                <mat-error>Минимум 6 символа</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Потвърди парола</mat-label>
+                <input matInput type="password" formControlName="confirmPassword" />
+                @if (confirmPasswordControl?.touched && confirmPasswordControl?.hasError('required')) {
+                <mat-error>Потвърди паролата си</mat-error>
+                }
+                @if (
+                confirmPasswordControl?.touched &&
+                !confirmPasswordControl?.hasError('required') &&
+                registerForm.hasError('passwordsMismatch')
+                ) {
+                <mat-error>Паролите не съвпадат</mat-error>
+                }
+            </mat-form-field>
+
+            @if (errorMessage()) {
+            <p class="form-error">{{ errorMessage() }}</p>
+            }
+
+            @if (successMessage()) {
+            <p class="form-success">{{ successMessage() }}</p>
+            }
+
+            <button mat-flat-button type="submit" class="register-button"
+                [disabled]="registerForm.invalid || isLoading()">
+                @if (isLoading()) {
+                <mat-spinner diameter="20" class="register-spinner"></mat-spinner>
+                } @else {
+                Регистрирай се
+                }
+            </button>
+
+            <p class="login-hint">
+                Вече имаш профил? <a [routerLink]="['/login']">Влез оттук</a>
+            </p>
+        </form>
+    </mat-card>
+</div>

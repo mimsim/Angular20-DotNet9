@@ -3,13 +3,18 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'members',
+        redirectTo: 'home',
         pathMatch: 'full'
+    },
+    {
+        path: 'home',
+        loadComponent: () =>
+            import('./feature/home-component/home-component').then(m => m.HomeComponent)
     },
     {
         path: 'members',
         loadComponent: () =>
-            import('./members-component/members-component').then(m => m.MembersComponent)  
+            import('./members-component/members-component').then(m => m.MembersComponent)
     },
     // {
     //     path: 'members/:id',
