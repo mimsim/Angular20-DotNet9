@@ -13,16 +13,22 @@ public class Seed
         if (await context.Users.AnyAsync()) return;
 
         var membersData = await File.ReadAllTextAsync("Data/UserSeedData.json");
-        var members = JsonSerializer.Deserialize<List<SeedUserDto>>(membersData);
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        var members = JsonSerializer.Deserialize<List<SeedUserDto>>(membersData, options);
 
         if (members == null)
         {
             return;
         }
 
-        using var hmac = new HMACSHA512();
         foreach (var member in members)
         {
+            using var hmac = new HMACSHA512();
             var user = new AppUser
             {
                 Id = member.UserId,
@@ -42,14 +48,19 @@ public class Seed
                     Created = member.Created,
                 }
             };
-            user.Member.Photos.Add(new Photo
+
+            if (!string.IsNullOrWhiteSpace(member.ImageUrl))
             {
-                Url = member.ImageUrl!,
-                PublicId = $"seed-{member.UserId}",
-                MemberId = member.UserId,
-            });
+                user.Member.Photos.Add(new Photo
+                {
+                    Url = member.ImageUrl,
+                    PublicId = $"seed-{member.UserId}",
+                });
+            }
+
             context.Users.Add(user);
         }
+
         await context.SaveChangesAsync();
     }
 }
