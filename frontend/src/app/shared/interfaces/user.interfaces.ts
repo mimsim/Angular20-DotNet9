@@ -20,3 +20,10 @@ export interface RegisterResponse {
     userId: string;
     // добави други полета според твоя backend отговор
 }
+export interface AuthUser {
+    id: string;
+    token: string;
+    displayName: string;
+    email: string;
+    imageUrl?: string;
+}

@@ -1,10 +1,11 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { MembersService } from '../shared/services/members-service';
 import { IMember } from '../shared/interfaces/members.interfaces';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-members-component',
-  imports: [],
+  imports: [JsonPipe],
   standalone: true,
   templateUrl: './members-component.html',
   styleUrl: './members-component.css',

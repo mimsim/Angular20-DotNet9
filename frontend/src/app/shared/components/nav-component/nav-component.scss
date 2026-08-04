@@ -1,3 +1,7 @@
+:host {
+    display: block;
+}
+
 .nav-toolbar {
     display: flex;
     align-items: center;
@@ -68,6 +72,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
 }
 
 .login-field {
@@ -99,6 +104,11 @@
     color: #14082e;
 }
 
+.login-field ::ng-deep mat-error {
+    color: #ffb4b4;
+    font-size: 11px;
+}
+
 .login-button {
     background-color: rgba(255, 255, 255, 0.15);
     color: #fff;
@@ -106,6 +116,26 @@
     height: 40px;
     line-height: 40px;
     padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-button:disabled {
+    opacity: 0.7;
+}
+
+.login-spinner ::ng-deep circle {
+    stroke: #fff;
+}
+
+.login-error {
+    position: absolute;
+    bottom: -18px;
+    right: 20px;
+    font-size: 11px;
+    color: #ffb4b4;
+    white-space: nowrap;
 }
 
 .login-button:hover {
@@ -125,4 +155,32 @@
         width: 100%;
         justify-content: flex-end;
     }
+}
+
+/* Auth зона */
+.user-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-transform: none;
+}
+
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-avatar-placeholder {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: #fff;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 500;
 }
