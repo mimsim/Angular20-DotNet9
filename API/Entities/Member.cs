@@ -26,7 +26,8 @@ public class Member
     public required string Country { get; set; }
     [JsonIgnore]
     public List<Photo> Photos { get; set; } = [];
-    
+    public List<MemberLike> LikedByMembers { get; set; } = [];
+    public List<MemberLike> LikedMembers { get; set; } = [];
     [JsonIgnore]
     [ForeignKey(nameof(UserId))]
     public AppUser User { get; set; } = null!;
