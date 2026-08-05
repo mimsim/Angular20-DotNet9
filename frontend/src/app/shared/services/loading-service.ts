@@ -1,0 +1,20 @@
+import { Service, signal } from '@angular/core';
+
+@Service()
+export class LoadingService {
+    private requestCount = 0;
+    isLoading = signal(false);
+
+    show(): void {
+        this.requestCount++;
+        this.isLoading.set(true);
+    }
+
+    hide(): void {
+        this.requestCount--;
+        if (this.requestCount <= 0) {
+            this.requestCount = 0;
+            this.isLoading.set(false);
+        }
+    }
+}

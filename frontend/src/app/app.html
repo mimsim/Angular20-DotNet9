@@ -1,2 +1,7 @@
 <app-nav />
+@if (loadingService.isLoading()) {
+<div class="global-loader">
+    <mat-spinner diameter="50" />
+</div>
+}
 <router-outlet />

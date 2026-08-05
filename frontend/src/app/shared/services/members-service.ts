@@ -6,7 +6,7 @@ import { IMember } from '../interfaces/members.interfaces';
 @Service()
 export class MembersService {
     private http = inject(HttpClient);
-    private baseUrl = 'http://localhost:5001/api/members'; // смени с твоя реален URL
+    private baseUrl = 'http://localhost:5001/api/members'; 
 
     getMembers(): Observable<IMember[]> {
         return this.http.get<IMember[]>(this.baseUrl,this.getHttpOptions());

@@ -1,8 +1,18 @@
+<div class="member-box-container">
 @for (member of members(); track member.id) {
-<a class="member-box" [routerLink]="['/members', member.userId]">
-    <img [src]="member.imageUrl || 'assets/placeholder.png'" [alt]="member.displayName" class="member-box-photo" />
-    <span class="member-box-name">{{ member.displayName }}</span>
-</a>
-} @empty {
-<p>Няма намерени членове.</p>
-}
+        <mat-card class="member-box">
+            <a [routerLink]="['/members', member.userId]" class="member-box-link">
+                @if(member.imageUrl == null) {
+                    <img src="assets/img.jpg" [alt]="member.displayName" class="member-box-photo" />
+                } @else {
+                    <img [src]="member.imageUrl" [alt]="member.displayName" class="member-box-photo" />
+                }
+                <span class="member-box-name">{{ member.displayName }}</span>
+                <span class="member-box-name">{{ member.gender }}</span>
+                <span class="member-box-name">{{ member.city }}</span>
+            </a>
+        </mat-card>
+    } @empty {
+        <p>Няма намерени членове.</p>
+    }
+</div>

@@ -52,7 +52,7 @@ namespace API.Controllers
                 return Unauthorized();
             }
 
-            var member = await memberRepository.GetMemberByIdAsync(userId);
+            var member = await memberRepository.GetMemberForUpdateAsync(userId);
 
             if (member == null)
             {
@@ -67,7 +67,7 @@ namespace API.Controllers
             member.City = updateDto.City ?? member.City;
             member.Country = updateDto.Country ?? member.Country;
             member.ImageUrl = updateDto.ImageUrl ?? member.ImageUrl;
-
+            member.User.DisplayName = updateDto.DisplayName ?? member.User.DisplayName;
             memberRepository.Update(member);
 
             if (await memberRepository.SaveAllAsync())

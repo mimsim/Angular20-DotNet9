@@ -8,6 +8,7 @@
     border-radius: 10px;
     overflow: hidden;
     transition: transform 0.15s ease;
+    width: 30%;
 }
 
 .member-box:hover {
@@ -25,4 +26,19 @@
     margin-top: 6px;
     font-size: 14px;
     font-weight: 600;
+    display: block;
+    
+}
+.member-box-container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 80%;
+    margin: 0 auto;
+    gap: 24px;
+}
+.member-box-link{
+    display: block;
+    text-decoration: none;
+    min-height: 100px;
 }

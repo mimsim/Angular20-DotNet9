@@ -5,12 +5,13 @@ import { IMember } from '../shared/interfaces/members.interfaces';
 import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 
+
 @Component({
   selector: 'app-members-component',
   imports: [ MaterialModule, RouterModule],
   standalone: true,
   templateUrl: './members-component.html',
-  styleUrl: './members-component.css',
+  styleUrl: './members-component.scss',
 })
 export class MembersComponent implements OnInit {
   private membersService = inject(MembersService);

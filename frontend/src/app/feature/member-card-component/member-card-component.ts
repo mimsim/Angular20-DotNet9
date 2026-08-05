@@ -13,7 +13,7 @@ import { MembersService } from '../../shared/services/members-service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './member-card-component.html',
-  styleUrl: './member-card-component.css',
+  styleUrl: './member-card-component.scss',
 })
 export class MemberCardComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
@@ -103,6 +103,7 @@ export class MemberCardComponent implements OnInit {
         this.member.set(updatedMember);
         this.isSaving.set(false);
         this.isEditing.set(false);
+        console.log('success', formValue)
       },
       error: () => {
         this.isSaving.set(false);
