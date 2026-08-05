@@ -1,11 +1,13 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { MembersService } from '../shared/services/members-service';
 import { IMember } from '../shared/interfaces/members.interfaces';
-import { JsonPipe } from '@angular/common';
+
+import { MaterialModule } from '../material.module';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-members-component',
-  imports: [JsonPipe],
+  imports: [ MaterialModule, RouterModule],
   standalone: true,
   templateUrl: './members-component.html',
   styleUrl: './members-component.css',

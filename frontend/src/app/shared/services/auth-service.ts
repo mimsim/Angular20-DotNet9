@@ -26,6 +26,7 @@ export class AuthService {
 
     logout(): void {
         this.currentUser.set(null);
+        localStorage.removeItem('currentUser');
     }
 
     private setCurrentUser(user: AuthUser): void {

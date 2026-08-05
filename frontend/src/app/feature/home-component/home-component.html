@@ -1,17 +1,16 @@
-
-    <section class="container">
-        <div class="row">
-            @if (!registerMode()) {
-            <div>
-                <h1>Welcome to the Home Component</h1>
-                <p>This is the home page of the application.</p>
-                <button (click)="showRegister()" matButton="outlined">Register</button>
-            </div>
-        }   @else {
-            <div>
-                <h1>Register</h1>
-                <p>Please fill in the registration form.</p>
-                <app-register></app-register>
-            </div>
-        }
+<section class="container">
+    <div class="row">
+        @if (!registerMode()) {
+        <div>
+            <h1>Welcome to the Home Component</h1>
+            <p>This is the home page of the application.</p>
+            <button (click)="showRegister()" matButton="outlined">Register</button>
         </div>
+        } @else {
+        <div>
+            <h1>Register</h1>
+            <p>Please fill in the registration form.</p>
+            <app-register></app-register>
+        </div>
+        }
+    </div>

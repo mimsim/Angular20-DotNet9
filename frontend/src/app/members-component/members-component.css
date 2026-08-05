@@ -1,0 +1,28 @@
+.member-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.15s ease;
+}
+
+.member-box:hover {
+    transform: translateY(-3px);
+}
+
+.member-box-photo {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.member-box-name {
+    margin-top: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}

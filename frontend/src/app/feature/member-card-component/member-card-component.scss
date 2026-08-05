@@ -1,0 +1,112 @@
+.member-detail {
+    display: flex;
+    gap: 24px;
+    max-width: 640px;
+    margin: 24px auto;
+    padding: 20px;
+}
+
+.member-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.member-info h2 {
+    margin: 0 0 12px;
+    color: #14082e;
+}
+
+.member-info p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.edit-button {
+    margin-top: 16px;
+    padding: 10px 20px;
+    background: #5b2fd4;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.edit-button:hover {
+    background: #4a25ad;
+}
+
+.error-text {
+    color: #d32f2f;
+    text-align: center;
+    margin: 24px;
+}
+
+/* Edit форма */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 480px;
+    margin: 24px auto;
+    padding: 20px;
+}
+
+.edit-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #14082e;
+}
+
+.edit-form input,
+.edit-form select,
+.edit-form textarea {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.field-error {
+    color: #d32f2f;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.save-button {
+    padding: 10px 20px;
+    background: #5b2fd4;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.save-button:disabled {
+    opacity: 0.6;
+}
+
+.cancel-button {
+    padding: 10px 20px;
+    background: transparent;
+    color: #5b2fd4;
+    border: 1px solid #5b2fd4;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}

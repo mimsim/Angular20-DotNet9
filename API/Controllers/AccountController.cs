@@ -12,14 +12,10 @@ namespace API.Controllers;
 
 public class AccountController(AppDbContext context, ITokenService tokenService) : BaseApiController
 {
-   [HttpPost("register")]
+    [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
-        var username = registerDto.GetType().GetProperty("Username")?.GetValue(registerDto)?.ToString()
-            ?? registerDto.GetType().GetProperty("Email")?.GetValue(registerDto)?.ToString()
-            ?? string.Empty;
-
-        if (await UserExists(username))
+        if (await UserExists(registerDto.DisplayName))
         {
             return BadRequest("Username is taken");
         }
@@ -28,6 +24,7 @@ public class AccountController(AppDbContext context, ITokenService tokenService)
         {
             return BadRequest("Email is already registered");
         }
+
         using var hmac = new HMACSHA512();
 
         var user = new AppUser
@@ -35,13 +32,22 @@ public class AccountController(AppDbContext context, ITokenService tokenService)
             DisplayName = registerDto.DisplayName,
             Email = registerDto.Email,
             PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-            PasswordSalt = hmac.Key
+            PasswordSalt = hmac.Key,
+            Member = new Member
+            {
+                UserId = string.Empty, // ще се сетне по-долу, след като имаме user.Id
+                DisplayName = registerDto.DisplayName,
+                City = string.Empty,
+                Country = string.Empty,
+                Gender = string.Empty,
+            }
         };
+
+        // UserId на Member трябва да съвпада с AppUser.Id (string GUID)
+        user.Member.UserId = user.Id;
 
         context.Users.Add(user);
         await context.SaveChangesAsync();
-
-        var token = tokenService.CreateToken(user);
 
         return user.ToDto(tokenService);
     }
@@ -82,8 +88,6 @@ public class AccountController(AppDbContext context, ITokenService tokenService)
             }
         }
 
-        var token = tokenService.CreateToken(user);
-
-         return user.ToDto(tokenService);
+        return user.ToDto(tokenService);
     }
 }

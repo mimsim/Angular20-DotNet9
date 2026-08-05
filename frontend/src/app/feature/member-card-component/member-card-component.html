@@ -1,0 +1,83 @@
+@if (isLoading()) {
+<p>Зареждане...</p>
+} @else if (errorMessage()) {
+<p class="error-text">{{ errorMessage() }}</p>
+} @else if (member(); as m) {
+
+@if (!isEditing()) {
+<!-- ИЗГЛЕД (view mode) -->
+<div class="member-detail">
+    <img [src]="m.imageUrl || 'assets/placeholder.png'" [alt]="m.displayName" class="member-photo" />
+
+    <div class="member-info">
+        <h2>{{ m.displayName }}</h2>
+        <p><strong>Email:</strong> {{ m.email }}</p>
+        <p><strong>Дата на раждане:</strong> {{ m.dateOfBirth }}</p>
+        <p><strong>Пол:</strong> {{ m.gender }}</p>
+        <p><strong>Локация:</strong> {{ m.city }}, {{ m.country }}</p>
+        <p><strong>Описание:</strong> {{ m.description || '—' }}</p>
+
+        @if (isOwnProfile()) {
+        <button type="button" (click)="onStartEdit()" class="edit-button">
+            Редактирай профила
+        </button>
+        }
+    </div>
+</div>
+} @else {
+<!-- РЕДАКЦИЯ (edit mode) -->
+<form [formGroup]="editForm" (ngSubmit)="onSave()" class="edit-form">
+    <label>
+        Име
+        <input type="text" formControlName="displayName" />
+        @if (editForm.get('displayName')?.touched && editForm.get('displayName')?.invalid) {
+        <span class="field-error">Името е задължително (мин. 2 символа)</span>
+        }
+    </label>
+
+    <label>
+        Дата на раждане
+        <input type="date" formControlName="dateOfBirth" />
+    </label>
+
+    <label>
+        Пол
+        <select formControlName="gender">
+            <option value="">Избери...</option>
+            <option value="male">Мъж</option>
+            <option value="female">Жена</option>
+            <option value="other">Друго</option>
+        </select>
+    </label>
+
+    <label>
+        Град
+        <input type="text" formControlName="city" />
+    </label>
+
+    <label>
+        Държава
+        <input type="text" formControlName="country" />
+    </label>
+
+    <label>
+        URL на снимка
+        <input type="text" formControlName="imageUrl" />
+    </label>
+
+    <label>
+        Описание
+        <textarea formControlName="description" rows="4"></textarea>
+    </label>
+
+    <div class="form-actions">
+        <button type="submit" [disabled]="isSaving()" class="save-button">
+            @if (isSaving()) { Запазване... } @else { Запази }
+        </button>
+        <button type="button" (click)="onCancelEdit()" class="cancel-button">
+            Отказ
+        </button>
+    </div>
+</form>
+}
+}

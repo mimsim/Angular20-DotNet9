@@ -32,7 +32,7 @@ const MATERIAL_MODULES = [
     MatProgressBarModule,
     MatBadgeModule,
     MatMenuModule,
-    MatSidenavModule,
+    MatSidenavModule
 ];
 
 @NgModule({

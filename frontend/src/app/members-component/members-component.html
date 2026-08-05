@@ -1,11 +1,8 @@
-<p>members-component works!</p>
-<p>{{ members().length }}</p>
-{{ members() | json }}
 @for (member of members(); track member.id) {
-<div>
-
-    <p>{{ member.email }}</p>
-</div>
+<a class="member-box" [routerLink]="['/members', member.userId]">
+    <img [src]="member.imageUrl || 'assets/placeholder.png'" [alt]="member.displayName" class="member-box-photo" />
+    <span class="member-box-name">{{ member.displayName }}</span>
+</a>
 } @empty {
 <p>Няма намерени членове.</p>
 }

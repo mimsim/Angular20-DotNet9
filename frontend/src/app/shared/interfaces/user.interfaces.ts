@@ -27,3 +27,11 @@ export interface AuthUser {
     email: string;
     imageUrl?: string;
 }
+
+export interface UserProfile {
+    id: string;
+    displayName?: string;
+    email: string;
+    imageUrl?: string;
+    token: string;
+}
