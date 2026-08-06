@@ -2,11 +2,12 @@ import { inject, Service, signal } from '@angular/core';
 import { AuthUser, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../interfaces/user.interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { LikesService } from './likes-service';
 
 @Service()
 export class AuthService {
     private readonly http = inject(HttpClient);
-
+    public likesService = inject(LikesService);
     private readonly apiUrl = 'http://localhost:5001/api/account/login';
 
     private readonly registerUrl = 'http://localhost:5001/api/account/register';
@@ -32,6 +33,7 @@ export class AuthService {
     private setCurrentUser(user: AuthUser): void {
         this.currentUser.set(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
+        this.likesService.getLikeIds();
     }
 
     private readUserFromStorage(): AuthUser | null {

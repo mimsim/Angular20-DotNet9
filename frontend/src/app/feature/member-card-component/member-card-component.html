@@ -7,6 +7,13 @@
 @if (!isEditing()) {
 <!-- ИЗГЛЕД (view mode) -->
 <div class="member-detail">
+@if (member(); as m) {
+@if (!isOwnProfile()) {
+<button (click)="toggleLike(m.userId)" [class.liked]="hasLiked()">
+    {{ hasLiked() ? 'Unlike' : 'Like' }}
+</button>
+}
+}
     <img [src]="m.imageUrl || 'assets/placeholder.png'" [alt]="m.displayName" class="member-photo" />
 
     <div class="member-info">

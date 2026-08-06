@@ -6,7 +6,9 @@ namespace API.Entities;
 public class Member
 {
     public int Id { get; set; }
-    public required string UserId { get; set; }
+
+    public required string UserId { get; set; } 
+
     public DateOnly DateOfBirth { get; set; }
 
     public string? ImageUrl { get; set; }

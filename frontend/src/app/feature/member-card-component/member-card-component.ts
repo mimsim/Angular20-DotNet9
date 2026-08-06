@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { IMember } from '../../shared/interfaces/members.interfaces';
 import { AuthService } from '../../shared/services/auth-service';
 import { MembersService } from '../../shared/services/members-service';
+import { LikesService } from '../../shared/services/likes-service';
 
 
 
@@ -20,13 +21,15 @@ export class MemberCardComponent implements OnInit {
   private readonly membersService = inject(MembersService);
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
-
+  private readonly likesService = inject(LikesService);
   readonly member = signal<IMember | null>(null);
   readonly isLoading = signal(true);
   readonly errorMessage = signal<string | null>(null);
   readonly isEditing = signal(false);
   readonly isSaving = signal(false);
-
+  protected hasLiked = computed(() =>
+    this.likesService.likeIds().includes(this.member()?.userId ?? '')
+  );
   // Едит бутон се вижда само ако разглеждаш собствения си профил
   readonly isOwnProfile = computed(() => {
     const currentUser = this.authService.currentUser();
@@ -44,7 +47,7 @@ export class MemberCardComponent implements OnInit {
     imageUrl: [''],
   });
 
-  ngOnInit(): void {
+  ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (!id) {
@@ -57,6 +60,7 @@ export class MemberCardComponent implements OnInit {
       next: (member) => {
         this.member.set(member);
         this.isLoading.set(false);
+        console.log('member', member);
       },
       error: () => {
         this.errorMessage.set('Неуспешно зареждане на профила.');
@@ -65,7 +69,7 @@ export class MemberCardComponent implements OnInit {
     });
   }
 
-  onStartEdit(): void {
+  onStartEdit() {
     const m = this.member();
     if (!m) return;
 
@@ -82,11 +86,11 @@ export class MemberCardComponent implements OnInit {
     this.isEditing.set(true);
   }
 
-  onCancelEdit(): void {
+  onCancelEdit() {
     this.isEditing.set(false);
   }
 
-  onSave(): void {
+  onSave() {
     if (this.editForm.invalid) {
       this.editForm.markAllAsTouched();
       return;
@@ -109,6 +113,35 @@ export class MemberCardComponent implements OnInit {
         this.isSaving.set(false);
         this.errorMessage.set('Неуспешно запазване на промените.');
       },
+    });
+  }
+
+//   onLikeMember() {
+//     const memberId = this.member()?.userId
+// ;
+//     if (!memberId) return;
+
+//     this.likesService.toggleLike(memberId).subscribe({
+//       next: () => {
+//         this.likesService.getLikeIds();
+//       },
+//       error: () => {
+//         this.errorMessage.set('Неуспешно харесване на потребителя.');
+//       },
+//     });
+//   }
+
+
+  toggleLike(targetMemberId: string) {
+    this.likesService.toggleLike(targetMemberId).subscribe(() => {
+      const current = this.likesService.likeIds();
+      const isLiked = current.includes(targetMemberId);
+
+      this.likesService.likeIds.set(
+        isLiked
+          ? current.filter(id => id !== targetMemberId)
+          : [...current, targetMemberId]
+      );
     });
   }
 }

@@ -6,6 +6,7 @@ namespace API.Interfaces
     {
         Task<MemberLike?> GetMemberLikeAsync(string sourceMemberId, string targetMemberId);
         Task<IReadOnlyList<Member>> GetMembersLikes(string predicate, string memberId);
+        Task<IReadOnlyList<string>> GetCurrentMemberLikeIds(string memberId);
         Task<IReadOnlyList<string>> GetUserLikesAsync(string memberId);
 
         void DeleteLike(MemberLike like);

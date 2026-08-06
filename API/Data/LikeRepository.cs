@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
-
 public class LikeRepository(AppDbContext context) : ILikesRepository
 {
     public void AddLike(MemberLike like)
@@ -17,52 +16,53 @@ public class LikeRepository(AppDbContext context) : ILikesRepository
         context.Likes.Remove(like);
     }
 
-    public async Task<IReadOnlyList<string>?> GetCurrentMemberLikeIds(string memberId)
+    public async Task<bool> SaveAllChangesAsync()
     {
-        var memberIdInt = int.Parse(memberId);
+        return await context.SaveChangesAsync() > 0;
+    }
 
-        var likedMemberIds = await context.Likes
-            .Where(like => like.SourceMemberId == memberIdInt)
-            .Select(like => like.TargetMemberId.ToString())
+    public async Task<IReadOnlyList<string>> GetCurrentMemberLikeIds(string memberId)
+    {
+        return await context.Likes
+            .Where(like => like.SourceMemberId == memberId)
+            .Select(like => like.TargetMemberId)
             .ToListAsync();
-
-        return likedMemberIds;
     }
 
     public Task<MemberLike?> GetMemberLikeAsync(string sourceMemberId, string targetMemberId)
     {
-        throw new NotImplementedException();
+        return context.Likes.FindAsync(sourceMemberId, targetMemberId).AsTask();
     }
 
     public async Task<IReadOnlyList<Member>> GetMembersLikes(string predicate, string memberId)
     {
         var query = context.Likes.AsQueryable();
+
         switch (predicate)
         {
             case "liked":
-                query = query.Where(like => like.SourceMemberId.ToString() == memberId);
-                break;
-            case "likedBy":
-                query = query.Where(like => like.TargetMemberId.ToString() == memberId);
-                break;
-            default:
-                var likeIds = await GetCurrentMemberLikeIds(memberId);
-              return await query.Where(like => like.SourceMemberId.ToString() == memberId || like.TargetMemberId.ToString() == memberId)
-                    .Select(like => like.SourceMemberId.ToString() == memberId ? like.TargetMember : like.SourceMember)
+                return await query.Where(like => like.SourceMemberId == memberId)
+                    .Select(like => like.TargetMember)
                     .ToListAsync();
 
+            case "likedBy":
+                return await query.Where(like => like.TargetMemberId == memberId)
+                    .Select(like => like.SourceMember)
+                    .ToListAsync();
+
+            default:
+                return await query
+                    .Where(like => like.SourceMemberId == memberId || like.TargetMemberId == memberId)
+                    .Select(like => like.SourceMemberId == memberId ? like.TargetMember : like.SourceMember)
+                    .ToListAsync();
         }
-
-        return new List<Member>();
     }
 
-    public Task<IReadOnlyList<string>> GetUserLikesAsync(string memberId)
+    public async Task<IReadOnlyList<string>> GetUserLikesAsync(string memberId)
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task<bool> SaveAllChangesAsync()
-    {
-        return await context.SaveChangesAsync() > 0;
+        return await context.Likes
+            .Where(like => like.SourceMemberId == memberId)
+            .Select(like => like.TargetMemberId)
+            .ToListAsync();
     }
 }
