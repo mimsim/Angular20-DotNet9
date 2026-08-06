@@ -15,6 +15,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const MATERIAL_MODULES = [
     MatToolbarModule,
@@ -32,7 +33,9 @@ const MATERIAL_MODULES = [
     MatProgressBarModule,
     MatBadgeModule,
     MatMenuModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatTabsModule
+
 ];
 
 @NgModule({

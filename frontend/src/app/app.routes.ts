@@ -19,11 +19,16 @@ export const routes: Routes = [
     {
         path: 'members',
         loadComponent: () =>
-            import('./members-component/members-component').then(m => m.MembersComponent)
+            import('./feature/members-component/members-component').then(m => m.MembersComponent)
     },
     {
         path: 'members/:id',
         loadComponent: () =>
             import('./feature/member-card-component/member-card-component').then(m => m.MemberCardComponent)
+    },
+    {
+        path: 'lists',
+        loadComponent: () =>
+            import('./feature/liked-lists-component/liked-lists-component').then(m => m.LikedListsComponent)
     }
 ];

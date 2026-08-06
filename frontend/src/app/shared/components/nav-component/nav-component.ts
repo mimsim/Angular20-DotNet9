@@ -24,7 +24,8 @@ export class NavComponent {
   // Навигационни линкове (лесно разширими)
   readonly navLinks = [
     { label: 'Home', route: '/home' },
-    { label: 'members', route: '/members' }
+    { label: 'members', route: '/members' },
+        { label: 'lists', route: '/lists' }
   ];
 
   // UI състояние на заявката

@@ -1,0 +1,76 @@
+:host {
+    display: block;
+    padding: 24px;
+}
+
+::ng-deep {
+    .mat-mdc-tab-group {
+        --mat-tab-header-inactive-label-text-color: rgba(255, 255, 255, 0.6);
+        --mat-tab-header-active-label-text-color: #ffffff;
+        --mat-tab-header-active-ripple-color: #6d28d9;
+        --mat-tab-header-inactive-ripple-color: #6d28d9;
+        --mat-tab-header-active-focus-indicator-color: #8b5cf6;
+        --mat-tab-header-active-hover-indicator-color: #8b5cf6;
+        --mdc-tab-indicator-active-indicator-color: #8b5cf6;
+    }
+
+    .mat-mdc-tab .mdc-tab__text-label {
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 500;
+        letter-spacing: 0.3px;
+    }
+
+    .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+        color: #ffffff;
+    }
+
+    .mat-mdc-tab-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+.tab-content {
+    margin-top: 24px;
+
+    p {
+        color: rgba(255, 255, 255, 0.5);
+        text-align: center;
+        padding: 40px 0;
+    }
+}
+
+.member-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.member-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 16px;
+    transition: background 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
+    }
+
+    img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    span {
+        font-size: 14px;
+        font-weight: 500;
+    }
+}

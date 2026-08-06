@@ -1,9 +1,9 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { MembersService } from '../shared/services/members-service';
-import { IMember } from '../shared/interfaces/members.interfaces';
 
-import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../../material.module';
+import { IMember } from '../../shared/interfaces/members.interfaces';
+import { MembersService } from '../../shared/services/members-service';
 
 
 @Component({

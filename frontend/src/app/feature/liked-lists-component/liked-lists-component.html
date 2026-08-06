@@ -1,0 +1,22 @@
+<mat-tab-group (selectedIndexChange)="onTabChange($event)">
+    @for (tab of tabs; track tab.value) {
+    <mat-tab [label]="tab.label"></mat-tab>
+    }
+</mat-tab-group>
+
+<div class="tab-content">
+    @if (isLoading()) {
+    <p>Зареждане...</p>
+    } @else if (members().length === 0) {
+    <p>Няма членове в тази категория.</p>
+    } @else {
+    <div class="member-grid">
+        @for (member of members(); track member.userId) {
+        <a [routerLink]="['/members', member.userId]" class="member-card">
+            <img [src]="member.imageUrl || '/user.png'" [alt]="member.displayName" />
+            <span>{{ member.displayName }}</span>
+        </a>
+        }
+    </div>
+    }
+</div>
