@@ -15,11 +15,26 @@ public DbSet<AppUser> Users { get; set; }
 
     public DbSet<MemberLike> Likes { get; set; }
 
+    public DbSet<Message> Messages { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
-        // UserId трябва да е уникален, за да служи като principal key
+        builder.Entity<Message>()
+            .HasOne(m => m.Sender)
+            .WithMany(mem => mem.MessagesSent)
+            .HasForeignKey(m => m.SenderId)
+            .HasPrincipalKey(m => m.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Message>()
+            .HasOne(m => m.Recipient)
+            .WithMany(mem => mem.MessagesReceived)
+            .HasForeignKey(m => m.RecipientId)
+            .HasPrincipalKey(m => m.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         builder.Entity<Member>()
             .HasIndex(m => m.UserId)
             .IsUnique();
@@ -31,14 +46,14 @@ public DbSet<AppUser> Users { get; set; }
             .HasOne(s => s.SourceMember)
             .WithMany(t => t.LikedMembers)
             .HasForeignKey(s => s.SourceMemberId)
-            .HasPrincipalKey(m => m.UserId)   // <-- сочи към UserId, не към Id
+            .HasPrincipalKey(m => m.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<MemberLike>()
             .HasOne(s => s.TargetMember)
             .WithMany(t => t.LikedByMembers)
             .HasForeignKey(s => s.TargetMemberId)
-            .HasPrincipalKey(m => m.UserId)   // <-- сочи към UserId, не към Id
+            .HasPrincipalKey(m => m.UserId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }

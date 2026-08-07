@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260805052618_LikeEntityAdded")]
-    partial class LikeEntityAdded
+    [Migration("20260807051222_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,17 +99,55 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.MemberLike", b =>
                 {
-                    b.Property<int>("SourceMemberId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("SourceMemberId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("TargetMemberId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("TargetMemberId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("SourceMemberId", "TargetMemberId");
 
                     b.HasIndex("TargetMemberId");
 
                     b.ToTable("Likes");
+                });
+
+            modelBuilder.Entity("API.Entities.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DateRead")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("MessageSent")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("RecipientDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RecipientId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("SenderDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipientId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>
@@ -152,18 +190,41 @@ namespace API.Migrations
                     b.HasOne("API.Entities.Member", "SourceMember")
                         .WithMany("LikedMembers")
                         .HasForeignKey("SourceMemberId")
+                        .HasPrincipalKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Entities.Member", "TargetMember")
                         .WithMany("LikedByMembers")
                         .HasForeignKey("TargetMemberId")
+                        .HasPrincipalKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("SourceMember");
 
                     b.Navigation("TargetMember");
+                });
+
+            modelBuilder.Entity("API.Entities.Message", b =>
+                {
+                    b.HasOne("API.Entities.Member", "Recipient")
+                        .WithMany("MessagesReceived")
+                        .HasForeignKey("RecipientId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Member", "Sender")
+                        .WithMany("MessagesSent")
+                        .HasForeignKey("SenderId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Recipient");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>
@@ -187,6 +248,10 @@ namespace API.Migrations
                     b.Navigation("LikedByMembers");
 
                     b.Navigation("LikedMembers");
+
+                    b.Navigation("MessagesReceived");
+
+                    b.Navigation("MessagesSent");
 
                     b.Navigation("Photos");
                 });
