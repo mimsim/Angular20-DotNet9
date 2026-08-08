@@ -27,6 +27,8 @@ public class MessageRepository(AppDbContext context) : IMessageRepository
     public async Task<PaginatedResult<MessageDto>> GetMessagesForMember(MessageParams messageParams)
     {
         var query = context.Messages
+            .Include(m => m.Sender)
+            .Include(m => m.Recipient)
             .OrderByDescending(m => m.MessageSent)
             .AsQueryable();
 
@@ -39,17 +41,30 @@ public class MessageRepository(AppDbContext context) : IMessageRepository
                                 && !m.RecipientDeleted)
         };
 
-        var dtoQuery = query.Select(m => m.ToDto());
+        var totalCount = await query.CountAsync();
 
-        return await dtoQuery.ToPaginatedResultAsync(messageParams.PageNumber, messageParams.PageSize);
+        var messages = await query
+            .Skip((messageParams.PageNumber - 1) * messageParams.PageSize)
+            .Take(messageParams.PageSize)
+            .ToListAsync();
+
+        return new PaginatedResult<MessageDto>
+        {
+            Items = messages.Select(m => m.ToDto()).ToList(),
+            CurrentPage = messageParams.PageNumber,
+            PageSize = messageParams.PageSize,
+            TotalCount = totalCount,
+            TotalPages = (int)Math.Ceiling(totalCount / (double)messageParams.PageSize)
+        };
     }
-
     public async Task<IReadOnlyList<MessageDto>> GetMessageThread(string currentMemberId, string recipientId)
     {
         var messages = await context.Messages
             .Where(m =>
                 (m.SenderId == currentMemberId && m.RecipientId == recipientId && !m.SenderDeleted) ||
                 (m.SenderId == recipientId && m.RecipientId == currentMemberId && !m.RecipientDeleted))
+                .Include(m => m.Sender)
+        .Include(m => m.Recipient)
             .OrderBy(m => m.MessageSent)
             .ToListAsync();
 

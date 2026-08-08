@@ -2,13 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using API;
 using API.Entities;
 using System.Reflection.Emit;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
-public DbSet<AppUser> Users { get; set; }
+    public DbSet<AppUser> Users { get; set; }
     // public DbSet<WeatherForecast> WeatherForecasts { get; set; }
     public DbSet<Member> Members { get; set; }
     public DbSet<Photo> Photos { get; set; }
@@ -48,6 +49,14 @@ public DbSet<AppUser> Users { get; set; }
             .HasForeignKey(s => s.SourceMemberId)
             .HasPrincipalKey(m => m.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+        var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
+            v => v.ToUniversalTime(),
+            v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+        );
+        var nulableDateTimeConverter = new ValueConverter<DateTime?, DateTime?>(
+            v => v.HasValue ? v.Value.ToUniversalTime() : null,
+            v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : null
+        );
 
         builder.Entity<MemberLike>()
             .HasOne(s => s.TargetMember)

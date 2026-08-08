@@ -30,5 +30,10 @@ export const routes: Routes = [
         path: 'lists',
         loadComponent: () =>
             import('./feature/liked-lists-component/liked-lists-component').then(m => m.LikedListsComponent)
+    },
+    {
+        path: 'messages',
+        loadComponent: () =>
+            import('./feature/messages-component/messages-component').then(m => m.MessagesComponent)
     }
 ];

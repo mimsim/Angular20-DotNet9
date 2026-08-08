@@ -16,6 +16,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 const MATERIAL_MODULES = [
     MatToolbarModule,
@@ -34,8 +36,9 @@ const MATERIAL_MODULES = [
     MatBadgeModule,
     MatMenuModule,
     MatSidenavModule,
-    MatTabsModule
-
+    MatTabsModule,
+    MatPaginatorModule,
+    MatTableModule
 ];
 
 @NgModule({
